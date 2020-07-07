@@ -9,7 +9,7 @@ import {
   DesktopAuthorizationClientConfiguration, ElectronRpcManager,
 } from "@bentley/imodeljs-common";
 import {
-  DesktopAuthorizationClient, IModelApp, IModelAppOptions,
+  DesktopAuthorizationClient, IModelApp, IModelAppOptions, Viewport,
 } from "@bentley/imodeljs-frontend";
 import { Presentation } from "@bentley/presentation-frontend";
 import {
@@ -20,6 +20,7 @@ import { getSupportedRpcs } from "../../common/rpcs";
 import { IModelSelectFrontstage } from "../components/frontstages/IModelSelectFrontstage";
 import { SnapshotSelectFrontstage } from "../components/frontstages/SnapshotSelectFrontstage";
 import { AppState, AppStore } from "./AppState";
+import { ColorByCategoryListener } from "./ColorByCategory";
 
 export class App {
   private static _appState: AppState;
@@ -68,6 +69,10 @@ export class App {
 
     // Create a FrontStage where we can select a snapshot.
     FrontstageManager.addFrontstageProvider(new SnapshotSelectFrontstage());
+
+    IModelApp.viewManager.onViewOpen.addOnce((vp: Viewport) => {
+      ColorByCategoryListener.setupListener(vp);
+    });
   }
 
   public static async initializeOidc() {
