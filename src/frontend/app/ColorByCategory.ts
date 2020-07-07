@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 import { ColorDef } from "@bentley/imodeljs-common";
-import { EmphasizeElements, IModelApp, IModelConnection, SelectionSetEvent, Viewport, OutputMessagePriority, OutputMessageType } from "@bentley/imodeljs-frontend";
+import { EmphasizeElements, IModelApp, IModelConnection, OutputMessagePriority, OutputMessageType, SelectionSetEvent, Viewport } from "@bentley/imodeljs-frontend";
 import { Id64String } from "@bentley/bentleyjs-core";
 import { MessageManager, ReactNotifyMessageDetails } from "@bentley/ui-framework";
 
@@ -69,10 +69,10 @@ export class ColorByCategoryListener {
     const query = `SELECT cat.codeValue categoryName
     FROM bis.SpatialCategory cat
     JOIN bis.geometricElement3d selected ON cat.ecinstanceid = selected.category.id
-    WHERE selected.ecinstanceid = ` + inputId
+    WHERE selected.ecinstanceid = ` + inputId;
     const rows = [];
     for await (const row of iModel.query(query)) rows.push(row);
-    return rows[0].categoryName
+    return rows[0].categoryName;
   }
 
   // For bonus: show a message to the user containing the name of the category for the input element.
@@ -86,12 +86,12 @@ export class ColorByCategoryListener {
   private _elementSelected = async (ev: SelectionSetEvent) => {
     if (ev.set.elements.size === 1) {
       const sourceElementId = Array.from(ev.set.elements).pop();
-      console.log("ID of selected element: " + sourceElementId);
+      // console.log("ID of selected element: " + sourceElementId);
 
       if (sourceElementId) {
-        this.overrideColorForCategoryOfSelectedElement(sourceElementId, ev.set.iModel);
+        await this.overrideColorForCategoryOfSelectedElement(sourceElementId, ev.set.iModel);
 
-        this.showMessageForCategoryOfSelectedElement(sourceElementId, ev.set.iModel);
+        await this.showMessageForCategoryOfSelectedElement(sourceElementId, ev.set.iModel);
       }
     }
   }
