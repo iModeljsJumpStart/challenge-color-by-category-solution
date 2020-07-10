@@ -1,8 +1,8 @@
-# Desktop Starter
+# iModel.js Color-By-Category Challenge Solution
 
 Copyright © Bentley Systems, Inc.
 
-The purpose of this app is to serve as a desktop starter to be copied by a developer.
+This app is the full solution to a challenge for learning about iModel.js.  Please see the [full instructions](https://imodeljsjumpstart.github.io/challenges/challenge-color-by-category.html) for the challenge.
 
 See <http://imodeljs.org> for comprehensive documentation on the iModel.js API and the various constructs used in this app.
 
